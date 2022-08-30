@@ -1,5 +1,7 @@
 package level1.체육복;
 
+import java.util.Arrays;
+
 public class Code {
 
     public static void main(String[] args) {
@@ -14,10 +16,20 @@ public class Code {
     public int solution(int n, int[] lost, int[] reserve) {
         int answer = n - lost.length;
 
-        for(int lo : lost) {
-            for(int re : reserve) {
-                if((lo + 1 == re) || (lo - 1 == re) || (lo == re)) {
+        Arrays.sort(lost);
+        Arrays.sort(reserve);
+
+        for(int i = 0; i < lost.length; i++) {
+            for(int j = 0; j < reserve.length; j++) {
+                if(reserve[j] == lost[i]) {
                     answer += 1;
+                    lost[i] = -1;
+                    reserve[j] = -1;
+                    break;
+                }
+                if (reserve[j] - 1 == lost[i] || reserve[j] + 1 == lost[i]) {
+                    answer += 1;
+                    reserve[j] = -1;
                     break;
                 }
             }
